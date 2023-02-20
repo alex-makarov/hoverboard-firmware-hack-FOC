@@ -336,6 +336,10 @@
 
   // #define SUPPORT_BUTTONS_LEFT       // use left sensor board cable for button inputs.  Disable DEBUG_SERIAL_USART2!
   // #define SUPPORT_BUTTONS_RIGHT      // use right sensor board cable for button inputs. Disable DEBUG_SERIAL_USART3!
+
+  // #define INVERT_R_DIRECTION
+  // #define INVERT_L_DIRECTION
+
 #endif
 // ######################## END OF VARIANT_USART SETTINGS #########################
 

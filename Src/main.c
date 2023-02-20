@@ -461,12 +461,26 @@ int main(void) {
         Feedback.start	        = (uint16_t)SERIAL_START_FRAME;
         Feedback.cmd1           = (int16_t)input1[inIdx].cmd;
         Feedback.cmd2           = (int16_t)input2[inIdx].cmd;
-        Feedback.speedR_meas	  = (int16_t)rtY_Right.n_mot;
-        Feedback.speedL_meas	  = (int16_t)rtY_Left.n_mot;
+
+        #ifdef INVERT_R_DIRECTION
+        Feedback.wheelR_cnt     = (int16_t)odom_r * -1;
+        Feedback.speedR_meas	  = (int16_t)rtY_Right.n_mot; // left wheel speed is invered by default TODO: check this
+        #else
         Feedback.wheelR_cnt     = (int16_t)odom_r;
+        Feedback.speedR_meas	  = (int16_t)rtY_Right.n_mot * -1;
+        #endif
+
+        #ifdef INVERT_L_DIRECTION
+        Feedback.wheelL_cnt     = (int16_t)odom_l * -1;
+        Feedback.speedL_meas	  = (int16_t)rtY_Left.n_mot * -1;
+        #else
         Feedback.wheelL_cnt     = (int16_t)odom_l;
+        Feedback.speedL_meas	  = (int16_t)rtY_Left.n_mot; 
+        #endif
+
         Feedback.batVoltage	    = (int16_t)batVoltageCalib;
         Feedback.boardTemp	    = (int16_t)board_temp_deg_c;
+
 
         #if defined(FEEDBACK_SERIAL_USART2)
           if(__HAL_DMA_GET_COUNTER(huart2.hdmatx) == 0) {
